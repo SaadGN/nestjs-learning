@@ -1,11 +1,14 @@
-import { Controller, Get, Param, Post } from '@nestjs/common'
+import { Controller, Get, Param, Post, Query } from '@nestjs/common'
 import {UsersService} from './users.service'
 
 @Controller('users')
 export class UsersController {
     @Get()
-    getUsers(){
+    getUsers(@Query() query:any){
+        // getUsers(@Query('name') query:any){               for single param
     const userService = new UsersService
+    console.log(query)
+    // console.log(query.gender)
     return userService.getAllUsers()
 }
 @Post()
