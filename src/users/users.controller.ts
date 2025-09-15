@@ -25,7 +25,7 @@ export class UsersController {
 }
 @Post()
     createUsers(){
-        const user = {id:3,name:"doe" , age : 18}
+        const user = {id:3,name:"doe" , email : "doe@example.com"}
         this.usersService.createUser(user)
         return 'new user created'
     }

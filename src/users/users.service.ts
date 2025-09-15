@@ -1,7 +1,7 @@
 export class UsersService{
-    users:{id:number,name:string,age:number}[] = [
-        {id:1,name:"john" , age : 19},
-        {id:2,name:"shawn",age:23}
+    users:{id:number,name:string,email:string}[] = [
+        {id:1,name:"john" , email : "john@example.com"},
+        {id:2,name:"shawn",email:"shawn@example.com"}
     ]
     getAllUsers(){
     return this.users
@@ -9,7 +9,7 @@ export class UsersService{
     getUserbyId(id:number){
         return this.users.find(x => x.id===id)
     }
-    createUser(user:{id:number,name:string,age:number}){
+    createUser(user:{id:number,name:string,email:string}){
         this.users.push(user)
     }
 }
