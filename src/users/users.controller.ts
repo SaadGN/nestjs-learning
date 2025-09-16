@@ -26,6 +26,7 @@ export class UsersController {
     }
     @Post()
     createUsers(@Body() user: createUserDto) {
+        console.log(user instanceof createUserDto)
         return `new user is created`
     }
 
