@@ -6,9 +6,10 @@ import { UpdateUserDto } from './dtos/update-user.dto'
 
 @Controller('users')
 export class UsersController {
-    usersService: UsersService
-    constructor() {
-        this.usersService = new UsersService
+
+
+    constructor(private usersService:UsersService) {
+
     }
 
 
@@ -19,6 +20,18 @@ export class UsersController {
     // console.log(query)
     // // console.log(query.gender)
     // return userService.getAllUsers()
+
+@Get('')
+    getAllUsers(
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+        @Param() param: GetUserParamDto) {
+        // console.log(limit, page)
+
+        console.log(param)
+        return this.usersService.getAllUsers()
+    }
+
 
     @Get(':isMarried')
     getUsers(
