@@ -6,10 +6,11 @@ import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { TweetController } from './tweet/tweet.controller';
 import { TweetModule } from './tweet/tweet.module';
+import { TweetService } from './tweet/tweet.service';
 
 @Module({
   imports: [UsersModule, TweetModule],
   controllers: [AppController, UsersController, TweetController],
-  providers: [AppService ,UsersService],
+  providers: [AppService ,UsersService,TweetService],
 })
 export class AppModule {}
