@@ -13,13 +13,26 @@ export class User {
     })
     firstName:string
     
-    @Column()
+    @Column({
+        type:"varchar",
+        nullable:false,
+        length:100
+    })
     lastName:string
     
-    @Column()
+    @Column({
+        type:"varchar",
+        nullable:false,
+        length:100,
+        unique:true
+    })
     email:string
     
-    @Column()
+    @Column({
+        type:"varchar",
+        nullable:false,
+        length:100
+    })
     password:string
 
 }
