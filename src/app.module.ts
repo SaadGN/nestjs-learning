@@ -9,21 +9,26 @@ import { TweetModule } from './tweet/tweet.module';
 import { TweetService } from './tweet/tweet.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './users/user.entity';
 
 @Module({
-  imports: [UsersModule, TweetModule, AuthModule,TypeOrmModule.forRoot(
+  imports: [UsersModule, TweetModule, AuthModule, TypeOrmModule.forRootAsync(
     {
-      type:'postgres',
-      entities :[],
-      synchronize:true,
-      host:'localhost',
-      port:5432,
-      username:'postgres',
-      password:'',
-      database:'nestjs'
+      imports:[], 
+      inject:[],
+      useFactory: () => ({
+        type: 'postgres',
+        entities: [User],
+        synchronize: true,
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: '',
+        database: 'nestjs'
+      })
     }
   )],
   controllers: [AppController, UsersController, TweetController],
-  providers: [AppService ,UsersService,TweetService],
+  providers: [AppService, UsersService, TweetService],
 })
-export class AppModule {}
+export class AppModule { }
