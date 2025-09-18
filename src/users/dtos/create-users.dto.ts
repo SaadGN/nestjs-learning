@@ -9,7 +9,7 @@ export class createUserDto{
     @IsString({message:'name should be sting value'})
     @IsNotEmpty()
     @MaxLength(100)
-    lasttName:string;
+    lastName:string;
 
     @IsEmail()
     @MaxLength(100)

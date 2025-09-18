@@ -29,6 +29,6 @@ import { User } from './users/user.entity';
     }
   )],
   controllers: [AppController, UsersController, TweetController],
-  providers: [AppService, UsersService, TweetService],
+  providers: [AppService, TweetService,],
 })
 export class AppModule { }

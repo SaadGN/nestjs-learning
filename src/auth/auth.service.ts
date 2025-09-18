@@ -8,11 +8,7 @@ export class AuthService {
 
     isAuthenticated:Boolean=false
     login (email:string,pswd:string){
-        const user = this.userService.users.find(u => u.email ===email &&  u.pswd===pswd)
-        if(user){
-            this.isAuthenticated=true
-                return `my token string`
-        }
+       
         return `User not exist`
     }
 }
