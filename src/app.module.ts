@@ -18,7 +18,8 @@ import { ProfileModule } from './profile/profile.module';
       inject:[],
       useFactory: () => ({
         type: 'postgres',
-        entities: [User],
+        // entities: [User],
+        autoLoadEntities:true,
         synchronize: true,
         host: 'localhost',
         port: 5432,
