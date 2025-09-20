@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -9,16 +9,10 @@ export class User {
     @Column({
         type:"varchar",
         nullable:false,
-        length:100
+        length:30,
+        unique:true
     })
-    firstName:string
-    
-    @Column({
-        type:"varchar",
-        nullable:false,
-        length:100
-    })
-    lastName:string
+    username:string
     
     @Column({
         type:"varchar",
@@ -35,4 +29,12 @@ export class User {
     })
     password:string
 
+    @CreateDateColumn()
+    createdAt:Date
+
+    @UpdateDateColumn()
+    updatededAt:Date
+
+    @DeleteDateColumn()
+    deleteddAt:Date
 }
