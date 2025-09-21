@@ -22,15 +22,15 @@ constructor(
     }
     
     public async createUser(userDto:createUserDto){
-        //CREATE PROFILE & SAVE
+        // //CREATE PROFILE & SAVE
         userDto.profile = userDto.profile ?? {}
-        let profile = this.profileRepository.create(userDto.profile)
-        await this.profileRepository.save(profile)
+        // let profile = this.profileRepository.create(userDto.profile)
+        // await this.profileRepository.save(profile)
 
         //CREATE USER
         let user = this.userRepository.create(userDto)
         //SET PROFILE 
-        user.profile=profile
+        // user.profile=profile
 
         // SAVE USER
         return await this.userRepository.save(user)
