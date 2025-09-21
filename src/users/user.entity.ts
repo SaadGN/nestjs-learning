@@ -30,11 +30,10 @@ export class User {
     })
     password:string
 
-    @OneToOne( () => Profile , {
-        cascade:["insert"],
-        eager:true
+    @OneToOne( () => Profile ,(profile) => profile.user, {
+        cascade:["insert"]
     })
-    @JoinColumn()
+    @JoinColumn()    //create foreign key
     profile?:Profile
 
     @CreateDateColumn()

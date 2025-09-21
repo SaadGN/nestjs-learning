@@ -17,14 +17,11 @@ export class UsersService {
 
 
     getAllUsers() {
-        return this.userRepository.find(
-            // {
-            //     relations:{
-
-            //             profile:true    //EAGER LOADING
-            //     }
-            // }
-        )
+        return this.userRepository.find({
+            relations: {
+                profile: true    //EAGER LOADING
+            }
+        })
     }
 
     public async createUser(userDto: createUserDto) {
@@ -40,18 +37,18 @@ export class UsersService {
 
     public async deleteUser(id: number) {
         //Find user
-        let user = await this.userRepository.findOneBy({id});
+        let user = await this.userRepository.findOneBy({ id });
 
         // delete user
         await this.userRepository.delete(id)
 
-        
+
         //delete profile
         if (user && user.profile) {
-        await this.profileRepository.delete(user.profile.id);
-    }
+            await this.profileRepository.delete(user.profile.id);
+        }
         //send response
-        return {deleted:true}
+        return { deleted: true }
     }
 }
 

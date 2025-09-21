@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/user.entity";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Profile {
@@ -19,4 +20,8 @@ export class Profile {
         length: 100
     })
     lastName: string
+
+    @OneToOne( () => User,      //define relation
+    (user) => user.profile)     //linked to table user profile field
+    user:User
 }
