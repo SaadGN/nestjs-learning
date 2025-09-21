@@ -7,7 +7,7 @@ export class ProfileController {
 
 
     @Get()
-    public getProfiles(){
+    public getAllProfiles(){
         this.profileService.getAllProfiles()
     }
 }

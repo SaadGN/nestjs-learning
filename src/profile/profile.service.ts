@@ -12,7 +12,7 @@ export class ProfileService {
     ){}
     
     public getAllProfiles(){
-        this.profileRepositry.find({
+        return this.profileRepositry.find({
             relations:{
                 user:true
             }

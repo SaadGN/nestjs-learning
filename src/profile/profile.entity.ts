@@ -1,5 +1,5 @@
 import { User } from "src/users/user.entity";
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Profile {
@@ -21,7 +21,9 @@ export class Profile {
     })
     lastName: string
 
-    @OneToOne( () => User,      //define relation
-    (user) => user.profile)     //linked to table user profile field
-    user:User
+    @OneToOne(() => User,      //define relation
+        (user) => user.profile,     //linked to table user profile field 
+        { onDelete: 'CASCADE' })     
+    @JoinColumn()    //create foreign key
+    user: User
 }
