@@ -5,6 +5,7 @@ import { User } from "./user.entity"
 import { Repository } from "typeorm"
 import { createUserDto } from "./dtos/create-users.dto"
 import { Profile } from "src/profile/profile.entity"
+import { profile } from "console"
 
 @Injectable()
 export class UsersService{
@@ -18,7 +19,14 @@ constructor(
 
     
     getAllUsers(){
-        return this.userRepository.find()
+        return this.userRepository.find(
+            // {
+        //     relations:{
+                
+        //             profile:true    //EAGER LOADING
+        //     }
+        // }
+        )
     }
     
     public async createUser(userDto:createUserDto){
