@@ -4,12 +4,16 @@ import { AuthService } from "src/auth/auth.service"
 import { User } from "./user.entity"
 import { Repository } from "typeorm"
 import { createUserDto } from "./dtos/create-users.dto"
+import { Profile } from "src/profile/profile.entity"
 
 @Injectable()
 export class UsersService{
 constructor(
     @InjectRepository(User)
-    private userRepository:Repository<User>
+    private userRepository:Repository<User>,
+
+    @InjectRepository(Profile)
+    private profileRepository:Repository<Profile>
 ){}
 
     
@@ -18,17 +22,20 @@ constructor(
     }
     
     public async createUser(userDto:createUserDto){
-        //if the user already exists
-        const user = await this.userRepository.findOne({
-            where:{email:userDto.email}
-        })
-        if(user){
-            return "user aready exists"
-        
-        }
-        let newUser = this.userRepository.create(userDto)
-        newUser = await this.userRepository.save(newUser)
-        return newUser
+        //CREATE PROFILE & SAVE
+        userDto.profile = userDto.profile ?? {}
+        let profile = this.profileRepository.create(userDto.profile)
+        await this.profileRepository.save(profile)
+
+        //CREATE USER
+        let user = this.userRepository.create(userDto)
+        //SET PROFILE 
+        user.profile=profile
+
+        // SAVE USER
+        return await this.userRepository.save(user)
+
+               
     }
 }
 
