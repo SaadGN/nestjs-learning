@@ -8,7 +8,6 @@ import { TweetModule } from './tweet/tweet.module';
 import { TweetService } from './tweet/tweet.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
 import { ProfileModule } from './profile/profile.module';
 
 @Module({
@@ -30,6 +29,6 @@ import { ProfileModule } from './profile/profile.module';
     }
   ), ProfileModule],
   controllers: [AppController, UsersController, TweetController],
-  providers: [AppService, TweetService,],
+  providers: [AppService],
 })
 export class AppModule { }

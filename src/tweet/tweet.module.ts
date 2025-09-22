@@ -8,6 +8,7 @@ import { Tweet } from './tweet.entity';
 @Module({
   controllers:[TweetController],
   providers: [TweetService],
-  imports:[UsersModule , TypeOrmModule.forFeature([Tweet])]
+  imports:[UsersModule , TypeOrmModule.forFeature([Tweet])],
+  exports:[TweetService]
 })
 export class TweetModule {}
