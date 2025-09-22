@@ -18,7 +18,9 @@ export class Tweet{
     @UpdateDateColumn()
     updatedAt:Date
 
-    @ManyToOne( () => User , (user) => user.tweets)
+    @ManyToOne( () => User , (user) => user.tweets
+    // ,{eager:true}        eager-loading
+    )
     user:User
 
 }
