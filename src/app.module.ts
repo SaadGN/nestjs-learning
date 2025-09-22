@@ -5,10 +5,11 @@ import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { TweetController } from './tweet/tweet.controller';
 import { TweetModule } from './tweet/tweet.module';
-import { TweetService } from './tweet/tweet.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProfileModule } from './profile/profile.module';
+import { HashtagController } from './hashtag/hashtag.controller';
+import { HashtagModule } from './hashtag/hashtag.module';
 
 @Module({
   imports: [UsersModule, TweetModule, AuthModule, TypeOrmModule.forRootAsync(
@@ -27,8 +28,8 @@ import { ProfileModule } from './profile/profile.module';
         database: 'nestjs'
       })
     }
-  ), ProfileModule],
-  controllers: [AppController, UsersController, TweetController],
+  ), ProfileModule, HashtagModule],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule { }
