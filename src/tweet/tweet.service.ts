@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Param, ParseIntPipe } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { Tweet } from './tweet.entity';
@@ -60,5 +60,12 @@ export class TweetService {
         return await this.tweetRepository.save(tweet)
       }
     }
+  }
+
+  public async deleteTweet(id:number){
+    await this.tweetRepository.delete({
+      id
+    })
+    return {deleted:true,id}
   }
 }
