@@ -16,10 +16,16 @@ export class HashtagService {
 
         return await this.hashtagRepository.save(hashtag)
     }
+
     public async findHashtags(hashtags:number[]){
         return await this.hashtagRepository.find({
             where:{ id:In(hashtags)}
         })
+    }
+
+    public async deleteHashtag(id:number){
+        await this.hashtagRepository.delete({ id })
+        return {deleted:true,id}
     }
 
 }

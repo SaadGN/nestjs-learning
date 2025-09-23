@@ -25,8 +25,8 @@ export class Tweet {
     user: User
 
 
-    @ManyToMany(() => Hashtag)
-    @JoinTable()
+    @ManyToMany(() => Hashtag , (hashtag) => hashtag.tweets)
+    @JoinTable()   //owning side of tweet-hashag relation
     hashtags: Hashtag[]
 
 }
