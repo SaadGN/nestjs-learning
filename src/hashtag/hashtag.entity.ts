@@ -1,5 +1,5 @@
 import { Tweet } from "src/tweet/tweet.entity";
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Hashtag {
@@ -14,6 +14,9 @@ export class Hashtag {
     }
     )
     name: string
+
+    @DeleteDateColumn()
+    deletedAt:Date
 
     @ManyToMany(() => Tweet,
         (tweet) => tweet.hashtags,   //tweets has relationship with hashtags property of tweet
