@@ -17,10 +17,10 @@ export class UsersController {
         return this.usersService.FindUserById(id); 
     }
 
-    @Post()
-    createUsers(@Body() user: createUserDto) {
-        return this.usersService.createUser(user)
-    }
+    // @Post()
+    // createUsers(@Body() user: createUserDto) {
+    //     return this.usersService.createUser(user)
+    // }
 
     @Delete(':id')
     public deleteUser(@Param('id',ParseIntPipe) id:number){
