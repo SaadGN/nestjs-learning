@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable, RequestTimeoutException } from "@nestjs/common"
+import { BadRequestException, HttpException, HttpStatus, Injectable, RequestTimeoutException } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import { User } from "./user.entity"
 import { Repository } from "typeorm"
 import { createUserDto } from "./dtos/create-users.dto"
 import { Profile } from "src/profile/profile.entity"
 import { ConfigService } from "@nestjs/config"
+import { error } from "console"
 
 @Injectable()
 export class UsersService {
@@ -60,10 +61,6 @@ export class UsersService {
                     description: 'Could not connect to database!'
                 })
             }
-            // if(error.code === '23505')
-            // {
-            //     throw new BadRequestException('There is duplicate value for user in database')
-            // }
             console.log(error)
         }
     }
@@ -77,8 +74,22 @@ export class UsersService {
     }
 
     public async FindUserById(id: number) {
-        return await this.userRepository.findOneBy({ id })
+        const user =  await this.userRepository.findOneBy({ id })
+
+        if(!user){
+            throw new HttpException({
+                status:HttpStatus.NOT_FOUND,
+                error:  'The user with id '+id+' was not found',
+                table:'user'
+            },HttpStatus.NOT_FOUND,{
+                description:'The exception occured because user with id '+id+' was not found'
+            })
+        }
+
+        return user;
     }
+
+    
 }
 
 
