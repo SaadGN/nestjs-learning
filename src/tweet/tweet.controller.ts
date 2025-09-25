@@ -14,8 +14,8 @@ export class TweetController {
         @Param('userid',ParseIntPipe ) userid:number,
         @Query() paginationQueryDto: PaginationQueryDto
 ) { 
-    
-        return this.tweetService.getTweets(userid)
+
+        return this.tweetService.getTweets(userid,paginationQueryDto)
     }
 
     @Post()

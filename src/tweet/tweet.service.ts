@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTweetDto } from './dto/create-tweet.dto';
 import { HashtagService } from 'src/hashtag/hashtag.service';
 import { UpdateTweetDto } from './dto/update-tweet.dto';
-import { error } from 'console';
+import { PaginationQueryDto } from 'src/common/pagination/dto/pagination-query.dto';
 
 @Injectable()
 export class TweetService {
@@ -17,16 +17,21 @@ export class TweetService {
     @InjectRepository(Tweet)
     private readonly tweetRepository: Repository<Tweet>
   ) { }
-  public async getTweets(userId: number) {
-
+  public async getTweets(userId: number, pageQueryDto: PaginationQueryDto) {
+    // find user with given userid
     let user = await this.userService.FindUserById(userId)
 
-    if(!user){
+    if (!user) {
       throw new NotFoundException(`user with userId ${userId} not found!`)
     }
     return await this.tweetRepository.find({
-      where: { user: { id: userId } },  
-      relations: { user: true , hashtags:true} //load these relatios alongside getTweets
+      
+      where: { user: { id: userId } },
+      relations: { user: true, hashtags: true },//load these relatios alongside getTweets
+
+      skip: (pageQueryDto.page - 1) * pageQueryDto.limit,
+      take: pageQueryDto.limit
+
     })
   }
 
@@ -69,10 +74,10 @@ export class TweetService {
     }
   }
 
-  public async deleteTweet(id:number){
+  public async deleteTweet(id: number) {
     await this.tweetRepository.delete({
       id
     })
-    return {deleted:true,id}
+    return { deleted: true, id }
   }
 }
