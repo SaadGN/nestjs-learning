@@ -14,12 +14,12 @@ export class UsersController {
 
     @Post()
     createUsers(@Body() user: createUserDto) {
-        this.usersService.createUser(user)
+        return this.usersService.createUser(user)
     }
 
     @Delete(':id')
     public deleteUser(@Param('id',ParseIntPipe) id:number){
-        this.usersService.deleteUser(id)
+         this.usersService.deleteUser(id)
     }
 
 

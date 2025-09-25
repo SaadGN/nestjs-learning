@@ -42,6 +42,14 @@ export class UsersService {
             // //CREATE PROFILE & SAVE
             userDto.profile = userDto.profile ?? {}
 
+            //check if user with same username/email already exists
+            const existingUser = await this.userRepository.findOne({
+                where:[{username:userDto.username},{email:userDto.email}]
+            })
+            if(existingUser){
+                throw new BadRequestException('There is already a user with given username/email')
+            }
+
             //CREATE USER
             let user = this.userRepository.create(userDto)
             // SAVE USER
@@ -52,10 +60,10 @@ export class UsersService {
                     description: 'Could not connect to database!'
                 })
             }
-            if(error.code === '23505')
-            {
-                throw new BadRequestException('There is duplicate value for user in database')
-            }
+            // if(error.code === '23505')
+            // {
+            //     throw new BadRequestException('There is duplicate value for user in database')
+            // }
             console.log(error)
         }
     }
