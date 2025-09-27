@@ -1,10 +1,11 @@
 import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-// import { ConfigType } from '@nestjs/config';
+import type { ConfigType } from '@nestjs/config';
 import { createUserDto } from 'src/users/dtos/create-users.dto';
 import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { HashingProvider } from './provider/hashing.provider';
 import { response } from 'express';
+import  authConfig from './config/auth.config';
 
 @Injectable()
 export class AuthService {
@@ -14,10 +15,10 @@ export class AuthService {
         @Inject(forwardRef(() => UsersService))
         private readonly userService: UsersService,
 
-        private readonly hashingProvider: HashingProvider
+        private readonly hashingProvider: HashingProvider,
 
-        // @Inject(authConfig.KEY)
-        // private readonly authConfiguration :ConfigType<typeof authConfig>
+        @Inject(authConfig.KEY)
+        private readonly authConfiguration :ConfigType<typeof authConfig>,
 
     ){}
 
