@@ -1,4 +1,4 @@
-import { BadRequestException, forwardRef, HttpException, HttpStatus, Inject, Injectable, RequestTimeoutException } from "@nestjs/common"
+import { BadRequestException, forwardRef, HttpException, HttpStatus, Inject, Injectable, RequestTimeoutException, UnauthorizedException } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import { User } from "./user.entity"
 import { Repository } from "typeorm"
@@ -60,6 +60,7 @@ export class UsersService {
                 ...userDto,
                 password: await this.hashingProvider.hashedPassword(userDto.password)
             })
+            //  let user = this.userRepository.create(userDto)
             // SAVE USER
             return await this.userRepository.save(user)
         } catch (error) {
@@ -96,6 +97,23 @@ export class UsersService {
         return user;
     }
 
+    public async findUserByUsername(username:string){
+        let user :User | null =null
+        try{
+            user = await this.userRepository.findOneBy({
+                username
+            })
+        }catch(error){
+            throw new RequestTimeoutException(error,{
+                description:'user with given username could not be found'
+            })
+        }
+        if(!user){
+            throw new UnauthorizedException('User does not exist')
+        }
+
+        return user
+    }
     
 }
 

@@ -1,22 +1,49 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { forwardRef, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+// import { ConfigType } from '@nestjs/config';
 import { createUserDto } from 'src/users/dtos/create-users.dto';
 import { UsersService } from 'src/users/users.service';
+import { LoginDto } from './dto/login.dto';
+import { HashingProvider } from './provider/hashing.provider';
+import { response } from 'express';
 
 @Injectable()
 export class AuthService {
 
-    constructor(@Inject(forwardRef( () => UsersService))
-    private readonly userService: UsersService) { }
+    constructor(
 
-    // @Inject(authConfig.KEY)
-    // private readonly authConfiguration :ConfigType<typeof authConfig>
+        @Inject(forwardRef(() => UsersService))
+        private readonly userService: UsersService,
+
+        private readonly hashingProvider: HashingProvider
+
+        // @Inject(authConfig.KEY)
+        // private readonly authConfiguration :ConfigType<typeof authConfig>
+
+    ){}
 
     isAuthenticated: Boolean = false
-    login(email: string, pswd: string) {
+    public async login(loginDto: LoginDto) {
+        let user = await this.userService.findUserByUsername(loginDto.username)
 
-        return `User not exist`
+        //if user available then compare password
+        let isEqual:Boolean = false;
+        isEqual = await this.hashingProvider.comparePassword(loginDto.password,user.password)
+
+        if(!isEqual){
+            throw new UnauthorizedException('Incorrect password')
+        }
+
+        // send the response
+        return {
+            data:user,
+            success:true,
+            message:"User loged-in successfully"
+        }
+
     }
+
+
+
     public async signup(createUserDto: createUserDto) {
         return await this.userService.createUser(createUserDto)
     }
