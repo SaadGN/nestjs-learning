@@ -6,7 +6,7 @@ import { UsersService } from 'src/users/users.service';
 @Injectable()
 export class AuthService {
 
-    constructor(@Inject(UsersService)
+    constructor(@Inject(forwardRef( () => UsersService))
     private readonly userService: UsersService) { }
 
     // @Inject(authConfig.KEY)

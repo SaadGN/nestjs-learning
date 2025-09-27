@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable, RequestTimeoutException } from "@nestjs/common"
+import { BadRequestException, forwardRef, HttpException, HttpStatus, Inject, Injectable, RequestTimeoutException } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import { User } from "./user.entity"
 import { Repository } from "typeorm"
@@ -6,6 +6,7 @@ import { createUserDto } from "./dtos/create-users.dto"
 import { Profile } from "src/profile/profile.entity"
 import { ConfigService } from "@nestjs/config"
 import { error } from "console"
+import { HashingProvider } from "src/auth/provider/hashing.provider"
 
 @Injectable()
 export class UsersService {
@@ -16,7 +17,10 @@ export class UsersService {
         @InjectRepository(Profile)
         private profileRepository: Repository<Profile>,
 
-        private readonly configService: ConfigService
+        private readonly configService: ConfigService,
+
+        @Inject(forwardRef( () => HashingProvider))
+        private readonly hashingProvider:HashingProvider,
     ) { }
 
 
@@ -52,7 +56,10 @@ export class UsersService {
             }
 
             //CREATE USER
-            let user = this.userRepository.create(userDto)
+            let user = this.userRepository.create({
+                ...userDto,
+                password: await this.hashingProvider.hashedPassword(userDto.password)
+            })
             // SAVE USER
             return await this.userRepository.save(user)
         } catch (error) {
