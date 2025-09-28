@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { Observable } from "rxjs";
 import authConfig from "../config/auth.config";
 import type { ConfigType } from "@nestjs/config";
 
@@ -32,7 +31,7 @@ export class AuthorizeGuard implements CanActivate {
             const payload = await this.jwtService.verifyAsync(token, this.authConfiguration)
             request['user'] = payload
             console.log(payload)
-            
+
         } catch (error) {
             throw new UnauthorizedException();
         }
