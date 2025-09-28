@@ -4,6 +4,7 @@ import { createUserDto } from './dtos/create-users.dto'
 import { AuthorizeGuard } from 'src/auth/guards/authorize.guard';
 
 @Controller('users')
+@UseGuards(AuthorizeGuard)
 export class UsersController {
     constructor(private usersService: UsersService) { }
 
@@ -13,7 +14,7 @@ export class UsersController {
         return this.usersService.getAllUsers(); 
     }
 
-    @UseGuards(AuthorizeGuard)
+    // @UseGuards(AuthorizeGuard)
     @Get(':id')
     getUserById(@Param('id',ParseIntPipe) id:number) {
         return this.usersService.FindUserById(id); 
