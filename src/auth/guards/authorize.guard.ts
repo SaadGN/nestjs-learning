@@ -14,18 +14,18 @@ export class AuthorizeGuard implements CanActivate {
         @Inject(authConfig.KEY)
         private readonly authConfiguration: ConfigType<typeof authConfig>,
 
-        private readonly reflector:Reflector
+        private readonly reflector: Reflector
     ) { }
 
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         //read isPublic meta data
-        const isPublic = this.reflector.getAllAndOverride('isPublic',[
+        const isPublic = this.reflector.getAllAndOverride('isPublic', [
             context.getHandler(),
             context.getClass()
         ])
 
-        if(isPublic){
+        if (isPublic) {
             return true
         }
 
