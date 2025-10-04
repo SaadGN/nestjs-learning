@@ -5,7 +5,6 @@ import { Repository } from "typeorm"
 import { createUserDto } from "./dtos/create-users.dto"
 import { Profile } from "src/profile/profile.entity"
 import { ConfigService } from "@nestjs/config"
-import { error } from "console"
 import { HashingProvider } from "src/auth/provider/hashing.provider"
 
 @Injectable()
